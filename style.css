@@ -203,16 +203,14 @@ body {
     justify-content: center;
     border: 3px solid rgba(255, 255, 255, 0.3);
     animation: float 6s ease-in-out infinite;
-    overflow: hidden; /* keeps the image inside the circle */
+    overflow: hidden;
 }
 
-/* Styles the image itself */
 .profile-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* ensures it fills the circle without distortion */
+    object-fit: cover;
 }
-
 
 @keyframes float {
     0%, 100% {
@@ -267,59 +265,106 @@ section {
     background: #2563eb;
 }
 
-/* About Section */
-.about {
+/* Education Section */
+.education {
     background: #f9fafb;
 }
 
-.about-content {
+.education-timeline {
     max-width: 800px;
     margin: 0 auto;
-    text-align: center;
+    position: relative;
 }
 
-.about-text p {
-    font-size: 1.1rem;
-    color: #6b7280;
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
+.education-timeline::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #2563eb;
 }
 
-.about-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-left: 80px;
 }
 
-.stat {
-    text-align: center;
-    padding: 1.5rem;
+.timeline-icon {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    z-index: 1;
+}
+
+.timeline-content {
     background: white;
+    padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
-.stat:hover {
+.timeline-content:hover {
     transform: translateY(-5px);
 }
 
-.stat h3 {
-    font-size: 2.5rem;
-    color: #2563eb;
+.timeline-content h3 {
+    color: #1f2937;
+    font-size: 1.3rem;
     margin-bottom: 0.5rem;
 }
 
-.stat p {
+.timeline-content h4 {
+    color: #2563eb;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-date {
     color: #6b7280;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.timeline-content p {
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.education-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.highlight-tag {
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
 /* Skills Section */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -398,7 +443,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 7rem;
     color: white;
 }
 
@@ -452,7 +497,178 @@ section {
     color: #1d4ed8;
 }
 
+/* Competition Section */
+.competition {
+    background: white;
+}
+
+.competition-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.competition-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.comp-stat {
+    text-align: center;
+    padding: 2rem;
+    background: #f9fafb;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.comp-stat:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.comp-stat h3 {
+    font-size: 2.5rem;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+}
+
+.comp-stat p {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.competition-platforms {
+    margin-bottom: 4rem;
+}
+
+.competition-platforms h3 {
+    text-align: center;
+    color: #1f2937;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.platform-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+    border: 2px solid #f3f4f6;
+}
+
+.platform-card:hover {
+    transform: translateY(-5px);
+    border-color: #2563eb;
+}
+
+.platform-icon {
+    width: 50px;
+    height: 50px;
+    background: #eff6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: #2563eb;
+    font-size: 1.2rem;
+}
+
+.platform-card h4 {
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.platform-card p {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.platform-badge {
+    display: inline-block;
+    background: #10b981;
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.achievements h3 {
+    text-align: center;
+    color: #1f2937;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+.achievement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.achievement-item:hover {
+    transform: translateX(10px);
+}
+
+.achievement-item i {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+}
+
+.achievement-content h4 {
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.achievement-content p {
+    color: #6b7280;
+    line-height: 1.5;
+}
+
 /* Contact Section */
+.contact {
+    background: #f9fafb;
+}
+
 .contact-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -602,7 +818,7 @@ section {
     .profile-img {
         width: 200px;
         height: 200px;
-        font-size: 5rem;
+        margin-left: 0;
     }
 
     .contact-content {
@@ -621,8 +837,24 @@ section {
         grid-template-columns: 1fr;
     }
 
-    .about-stats {
+    .competition-stats {
         grid-template-columns: 1fr;
+    }
+
+    .platform-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .education-timeline::before {
+        left: 20px;
+    }
+
+    .timeline-item {
+        padding-left: 60px;
+    }
+
+    .timeline-icon {
+        left: 5px;
     }
 }
 
@@ -644,5 +876,14 @@ section {
         width: 100%;
         text-align: center;
         max-width: 250px;
+    }
+
+    .platform-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievement-item {
+        flex-direction: column;
+        text-align: center;
     }
 }

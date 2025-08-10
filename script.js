@@ -94,7 +94,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Animate elements on scroll
 function initScrollAnimations() {
-    const animatedElements = document.querySelectorAll('.skill-category, .project-card, .stat');
+    const animatedElements = document.querySelectorAll('.skill-category, .project-card, .comp-stat, .timeline-item, .platform-card, .achievement-item');
     
     animatedElements.forEach(element => {
         element.style.opacity = '0';
@@ -223,23 +223,6 @@ function typeWriter(element, text, speed = 100) {
     let i = 0;
     const originalHTML = element.innerHTML;
     element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            if (text.charAt(i) === '<') {
-                // Handle HTML tags
-                const tagEnd = text.indexOf('>', i);
-                if (tagEnd !== -1) {
-                    element.innerHTML += text.substring(i, tagEnd + 1);
-                    i = tagEnd + 1;
-                }
-            } else {
-                element.innerHTML += text.charAt(i);
-                i++;
-            }
-            setTimeout(type, speed);
-        }
-    }
     
     // Extract text content for typing, preserve HTML structure
     const textContent = element.textContent || element.innerText || '';
@@ -379,27 +362,27 @@ function initProjectHovers() {
 
 // Stats counter animation
 function animateStats() {
-    const stats = document.querySelectorAll('.stat h3');
+    const stats = document.querySelectorAll('.comp-stat h3');
     
     stats.forEach(stat => {
-        const target = parseInt(stat.textContent);
+        const target = parseInt(stat.textContent.replace(/\D/g, ''));
         let current = 0;
         const increment = target / 50;
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
-                stat.textContent = target + (stat.textContent.includes('+') ? '+' : '') + (stat.textContent.includes('%') ? '%' : '');
+                stat.textContent = target + (stat.textContent.includes('+') ? '+' : '');
                 clearInterval(timer);
             } else {
-                stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '') + (stat.textContent.includes('%') ? '%' : '');
+                stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '');
             }
         }, 50);
     });
 }
 
-// Initialize stats animation when about section is in view
-const aboutSection = document.querySelector('#about');
-if (aboutSection) {
+// Initialize stats animation when competition section is in view
+const competitionSection = document.querySelector('#competition');
+if (competitionSection) {
     const statsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -410,7 +393,7 @@ if (aboutSection) {
         });
     });
     
-    statsObserver.observe(aboutSection);
+    statsObserver.observe(competitionSection);
 }
 
 // Add loading animation
@@ -470,6 +453,69 @@ window.addEventListener('scroll', throttle(() => {
     updateActiveNavLink();
 }, 100));
 
+// Timeline animation for education section
+function animateTimeline() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    timelineItems.forEach((item, index) => {
+        setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateX(0)';
+        }, index * 200);
+    });
+}
+
+// Platform cards click effects
+function initPlatformInteractions() {
+    const platformCards = document.querySelectorAll('.platform-card');
+    
+    platformCards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Add a subtle click animation
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                card.style.transform = 'translateY(-5px) scale(1)';
+            }, 150);
+        });
+    });
+}
+
+// Achievement items hover effect
+function initAchievementEffects() {
+    const achievementItems = document.querySelectorAll('.achievement-item');
+    
+    achievementItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            const icon = item.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1.2) rotate(10deg)';
+            }
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            const icon = item.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+}
+
+// Initialize education timeline animation when section is in view
+const educationSection = document.querySelector('#education');
+if (educationSection) {
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateTimeline();
+                timelineObserver.unobserve(entry.target);
+            }
+        });
+    });
+    
+    timelineObserver.observe(educationSection);
+}
+
 // Console message for developers
 console.log('%c👋 Hello Developer!', 'color: #2563eb; font-size: 20px; font-weight: bold;');
 console.log('%cThanks for checking out my portfolio code!', 'color: #6b7280; font-size: 14px;');
@@ -480,7 +526,7 @@ if (!hamburger || !navMenu) {
     console.warn('Navigation elements not found. Some features may not work.');
 }
 
-// Add some additional CSS for animations
+// Add additional CSS for animations
 const additionalStyles = document.createElement('style');
 additionalStyles.textContent = `
     @keyframes fadeInUp {
@@ -521,8 +567,49 @@ additionalStyles.textContent = `
     .social-link,
     .project-link,
     .skill-tag,
-    .project-card {
+    .project-card,
+    .platform-card,
+    .achievement-item i {
         transition: all 0.3s ease;
+    }
+    
+    /* Timeline initial state */
+    .timeline-item {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.6s ease;
     }
 `;
 document.head.appendChild(additionalStyles);
+
+// Initialize all interactions
+document.addEventListener('DOMContentLoaded', () => {
+    initPlatformInteractions();
+    initAchievementEffects();
+});
+
+// Scroll progress indicator
+function addScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: #2563eb;
+        z-index: 999;
+        transition: width 0.1s ease;
+    `;
+    document.body.appendChild(progressBar);
+    
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+}
+
+// Initialize scroll progress
+document.addEventListener('DOMContentLoaded', addScrollProgress);
